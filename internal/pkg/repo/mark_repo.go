@@ -50,13 +50,13 @@ func (repo *markRepo) CreateMark(mark *entity.Mark) error {
 
 func (repo *markRepo) Update(mark *entity.Mark) error {
 	row := new(MarkDao).fromStruct(mark)
-	q := repo.db.Where("student_no = ? AND mark_code = ?", row.StudentID, row.ModuleID).Updates(&row)
+	q := repo.db.Where("student_no = ? AND module_code = ?", row.StudentID, row.ModuleID).Updates(&row)
 
 	return q.Error
 }
 
 func (repo *markRepo) Delete(studentID string, moduleID string) error {
-	q := repo.db.Where("student_no = ? AND mark_code = ?", studentID, moduleID).Delete(MarkDao{})
+	q := repo.db.Where("student_no = ? AND module_code = ?", studentID, moduleID).Delete(MarkDao{})
 	return q.Error
 }
 

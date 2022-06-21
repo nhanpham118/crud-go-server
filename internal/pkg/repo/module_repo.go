@@ -51,7 +51,7 @@ func (repo *moduleRepo) CreateModule(module *entity.Module) error {
 	row := new(ModuleDao).fromStruct(module)
 
 	// Execute if error then rollback before this
-	if err := tx.Save(&row).Error; err != nil {
+	if err := tx.Create(&row).Error; err != nil {
 		tx.Rollback()
 		return err
 	}

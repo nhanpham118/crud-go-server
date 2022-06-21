@@ -60,7 +60,7 @@ func (repo *studentRepo) CreateStudent(student *entity.Student) error {
 	row := new(StudentDao).fromStruct(student)
 
 	// Execute if error then rollback before this
-	if err := tx.Save(&row).Error; err != nil {
+	if err := tx.Create(&row).Error; err != nil {
 		tx.Rollback()
 		return err
 	}
@@ -115,6 +115,10 @@ type FullStudentDao struct {
 }
 
 func toStructFullStudent(students []*FullStudentDao) (*entity.FullStudent, error) {
+	if len(students) == 0 {
+		return nil, nil
+	}
+
 	score := make([]entity.Score, len(students))
 	for i, record := range students {
 		score[i].Mark = record.Mark
